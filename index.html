@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Prospectus Flipbook</title>
+<title>School Prospectus</title>
 
 <style>
 body{
@@ -11,73 +11,105 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:#cfcfcf;
-    font-family:Arial;
+    background:#bdbdbd;
+    font-family:Arial, sans-serif;
 }
 
+/* BOOK CONTAINER */
 .book{
     position:relative;
-    width:1200px;
-    height:800px;
-    perspective:4000px;
+    width:1300px;
+    height:850px;
+    perspective:5000px;
+    background:#eaeaea;
+    box-shadow:0 30px 60px rgba(0,0,0,0.4);
 }
 
+/* CENTER SPINE SHADOW */
+.book::before{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:0;
+    width:8px;
+    height:100%;
+    background:linear-gradient(to right,
+        rgba(0,0,0,0.3),
+        rgba(0,0,0,0.05),
+        rgba(0,0,0,0.3));
+    transform:translateX(-50%);
+    z-index:1000;
+}
+
+/* SPREAD */
 .spread{
     position:absolute;
     width:100%;
     height:100%;
     transform-style:preserve-3d;
-    transition:transform 1s ease;
+    transition:transform 1.2s cubic-bezier(.77,0,.175,1);
 }
 
+/* PAGE */
 .page{
     position:absolute;
     width:50%;
     height:100%;
     top:0;
+    overflow:hidden;
+    backface-visibility:hidden;
     background:white;
     display:flex;
     justify-content:center;
     align-items:center;
-    backface-visibility:hidden;
 }
 
+/* LEFT & RIGHT */
 .left{
     left:0;
-    border-right:1px solid #ddd;
+    border-right:1px solid #ccc;
 }
 
 .right{
     left:50%;
-    border-left:1px solid #ddd;
+    border-left:1px solid #ccc;
 }
 
+/* IMAGE FIT FULL */
 .page img{
-    max-width:95%;
-    max-height:95%;
-    object-fit:contain;
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
+/* BUTTONS */
 .controls{
     position:absolute;
-    bottom:-90px;
+    bottom:-100px;
     width:100%;
     text-align:center;
 }
 
 button{
-    padding:12px 35px;
-    margin:0 30px;
-    font-size:16px;
+    padding:14px 40px;
+    margin:0 40px;
+    font-size:18px;
     border:none;
-    background:#222;
+    border-radius:40px;
+    background:linear-gradient(135deg,#ff7e5f,#feb47b);
     color:white;
     cursor:pointer;
-    border-radius:5px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.3);
+    transition:all 0.3s ease;
 }
 
 button:hover{
-    background:#444;
+    transform:translateY(-3px);
+    box-shadow:0 15px 30px rgba(0,0,0,0.4);
+}
+
+button:active{
+    transform:scale(0.96);
 }
 </style>
 </head>
@@ -87,23 +119,22 @@ button:hover{
 <div class="book" id="book"></div>
 
 <div class="controls">
-    <button onclick="prev()">Previous</button>
-    <button onclick="next()">Next</button>
+    <button onclick="prev()">◀ Previous</button>
+    <button onclick="next()">Next ▶</button>
 </div>
 
 <script>
 
-const TOTAL_PAGES = 20; // 🔥 change to your total pages
+const TOTAL_PAGES = 20; // change if needed
 let current = 0;
 
 const book = document.getElementById("book");
 const spreads = [];
 
-/* -------- COVER PAGE (Page 1 Single) -------- */
-
-const coverSpread = document.createElement("div");
-coverSpread.className = "spread";
-coverSpread.style.zIndex = TOTAL_PAGES;
+/* COVER */
+const cover = document.createElement("div");
+cover.className = "spread";
+cover.style.zIndex = TOTAL_PAGES;
 
 const emptyLeft = document.createElement("div");
 emptyLeft.className = "page left";
@@ -115,14 +146,12 @@ const coverImg = document.createElement("img");
 coverImg.src = "page1.jpg";
 
 coverRight.appendChild(coverImg);
-coverSpread.appendChild(emptyLeft);
-coverSpread.appendChild(coverRight);
-book.appendChild(coverSpread);
+cover.appendChild(emptyLeft);
+cover.appendChild(coverRight);
+book.appendChild(cover);
+spreads.push(cover);
 
-spreads.push(coverSpread);
-
-/* -------- INSIDE PAGES -------- */
-
+/* INNER PAGES */
 for(let i = 2; i <= TOTAL_PAGES; i += 2){
 
     const spread = document.createElement("div");
@@ -141,19 +170,17 @@ for(let i = 2; i <= TOTAL_PAGES; i += 2){
 
     if(i + 1 <= TOTAL_PAGES){
         const rightImg = document.createElement("img");
-        rightImg.src = "page" + (i + 1) + ".jpg";
+        rightImg.src = "page" + (i+1) + ".jpg";
         right.appendChild(rightImg);
     }
 
     spread.appendChild(left);
     spread.appendChild(right);
     book.appendChild(spread);
-
     spreads.push(spread);
 }
 
-/* -------- CONTROLS -------- */
-
+/* FLIP */
 function next(){
     if(current < spreads.length){
         spreads[current].style.transform = "rotateY(-180deg)";
