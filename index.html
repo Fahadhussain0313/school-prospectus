@@ -1,1 +1,148 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <link rel="stylesheet" href="styles.css">\n    <script src="script.js" defer></script>\n    <title>School Prospectus</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            background-color: #f4f4f4;\n            margin: 0;\n            padding: 0;\n        }\n        header {\n            background: #35424a;\n            color: #ffffff;\n            padding: 20px 0;\n            text-align: center;\n        }\n        section {\n            padding: 20px;\n            margin: 20px;\n            background: white;\n            border-radius: 5px;\n            box-shadow: 0 0 10px rgba(0,0,0,0.1);\n        }\n    </style>\n</head>\n<body>\n<header>\n    <h1>Welcome to Our School</h1>\n</header>\n<section>\n    <h2>About Us</h2>\n    <p>Learn more about our school and its values.</p>\n</section>\n</body>\n</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Interactive Book Viewer</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .book {
+            width: 80%;
+            height: 70%;
+            overflow: hidden;
+            position: relative;
+        }
+        .page {
+            width: 50%;
+            height: 100%;
+            float: left;
+            transition: transform 0.5s;
+        }
+        .page img {
+            width: 100%;
+            height: auto;
+        }
+        .controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="book" id="book">
+        <div class="page" id="page1">
+            <img src="page1.jpg" alt="Page 1">
+        </div>
+        <div class="page" id="page2">
+            <img src="page2.jpg" alt="Page 2">
+        </div>
+        <div class="page" id="page3">
+            <img src="page3.jpg" alt="Page 3">
+        </div>
+        <div class="page" id="page4">
+            <img src="page4.jpg" alt="Page 4">
+        </div>
+        <div class="page" id="page5">
+            <img src="page5.jpg" alt="Page 5">
+        </div>
+        <div class="page" id="page6">
+            <img src="page6.jpg" alt="Page 6">
+        </div>
+        <div class="page" id="page7">
+            <img src="page7.jpg" alt="Page 7">
+        </div>
+        <div class="page" id="page8">
+            <img src="page8.jpg" alt="Page 8">
+        </div>
+        <div class="page" id="page9">
+            <img src="page9.jpg" alt="Page 9">
+        </div>
+        <div class="page" id="page10">
+            <img src="page10.jpg" alt="Page 10">
+        </div>
+        <div class="page" id="page11">
+            <img src="page11.jpg" alt="Page 11">
+        </div>
+        <div class="page" id="page12">
+            <img src="page12.jpg" alt="Page 12">
+        </div>
+        <div class="page" id="page13">
+            <img src="page13.jpg" alt="Page 13">
+        </div>
+        <div class="page" id="page14">
+            <img src="page14.jpg" alt="Page 14">
+        </div>
+        <div class="page" id="page15">
+            <img src="page15.jpg" alt="Page 15">
+        </div>
+        <div class="page" id="page16">
+            <img src="page16.jpg" alt="Page 16">
+        </div>
+        <div class="page" id="page17">
+            <img src="page17.jpg" alt="Page 17">
+        </div>
+        <div class="page" id="page18">
+            <img src="page18.jpg" alt="Page 18">
+        </div>
+        <div class="page" id="page19">
+            <img src="page19.jpg" alt="Page 19">
+        </div>
+        <div class="page" id="page20">
+            <img src="page20.jpg" alt="Page 20">
+        </div>
+    </div>
+    <div class="controls">
+        <button class="button" id="prev">Previous</button>
+        <button class="button" id="next">Next</button>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        let currentPage = 0;
+        const totalPages = 20;
+        const book = document.getElementById('book');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+
+        function updateBookView() {
+            book.style.transform = `translateX(-${currentPage * 100}%)`;
+        }
+
+        prevButton.addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage--;
+                updateBookView();
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            if (currentPage < totalPages - 1) {
+                currentPage++;
+                updateBookView();
+            }
+        });
+    </script>
+</body>
+</html>
